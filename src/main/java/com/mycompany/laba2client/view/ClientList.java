@@ -2,8 +2,6 @@ package com.mycompany.laba2client.view;
 
 import com.mycompany.laba2client.dto.Client;
 import com.mycompany.laba2client.utils.XmlReaderWriter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
