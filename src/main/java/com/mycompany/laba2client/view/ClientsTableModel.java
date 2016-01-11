@@ -10,7 +10,6 @@ import javax.swing.table.TableModel;
 
 public class ClientsTableModel implements TableModel {
     
-    //private final int ID_COL = 0;
     private final int NAME_COL = 1;
     private final int ADDR_COL = 2;
     private final int PHONE_COL = 3;
@@ -70,11 +69,11 @@ public class ClientsTableModel implements TableModel {
     public void setValueAt(Object o, int row, int col) {
 
         switch(col) {
-            case 1:
+            case NAME_COL:
                 clients.get(row).setName((String) o); break;
-            case 2:
+            case ADDR_COL:
                 clients.get(row).setAddress((String) o); break;
-            case 3:
+            case PHONE_COL:
                 clients.get(row).setPhone((String) o); break;
             default: ;}
           //TODO sendToServer(clients.get(row));  
