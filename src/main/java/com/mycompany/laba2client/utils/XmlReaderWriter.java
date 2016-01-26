@@ -31,6 +31,67 @@ public class XmlReaderWriter {
         this.dbf = DocumentBuilderFactory.newInstance();
     }
     
+    
+    public void eventToXml(String event, Client client, String filename)
+    {
+        try
+        {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.newDocument();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Element RootElement = doc.createElement("Event");
+            doc.appendChild(RootElement);
+                
+                Element ev = doc.createElement("Event"); //te это тип элемента
+                RootElement.appendChild(ev);   
+                
+            if(client != null)
+            {
+                Element te = doc.createElement("Client"); //te это тип элемента
+                RootElement.appendChild(te);
+
+                Element clientId = doc.createElement("client_id");
+                clientId.appendChild(doc.createTextNode( Long.toString(client.getId()) ) );
+                te.appendChild(clientId);
+                
+                Element name = doc.createElement("name");
+                name.appendChild(doc.createTextNode(client.getName()));
+                te.appendChild(name);
+
+                Element adres = doc.createElement("address"); 
+                adres.appendChild(doc.createTextNode(client.getAddress()));
+                te.appendChild(adres);
+
+                Element tel = doc.createElement("phone");
+                tel.appendChild(doc.createTextNode(client.getPhone()));
+                te.appendChild(tel);
+            }
+            transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(filename + ".xml")));
+           
+            
+            System.out.println("file ready to send ! "+filename + ".xml");
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new InformationSystemUiException("Problem load file cause: ", e);
+        }
+        catch (TransformerConfigurationException e)
+        {
+            throw new InformationSystemUiException("Problem parse xml cause: ", e);
+        }
+        catch (TransformerException e)
+        {
+            throw new InformationSystemUiException("Problem transform xml cause: ", e);
+        }
+        catch (ParserConfigurationException e)
+        {
+            throw new InformationSystemUiException("Problem Initialization xml parser: ", e);
+
+        } catch (IOException ex) {
+            Logger.getLogger(XmlReaderWriter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public HashSet<Client> readClientsFromXml(String filename)
     {   
         HashSet<Client> clientsSet = new HashSet<Client>();
