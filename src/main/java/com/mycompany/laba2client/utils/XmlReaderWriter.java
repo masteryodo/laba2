@@ -23,16 +23,79 @@ import com.mycompany.laba2client.exception.InformationSystemUiException;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
+
 public class XmlReaderWriter {
     private final DocumentBuilderFactory dbf;
         
+    
+ //-----------------------------------------------------------------------------
     public XmlReaderWriter()
     {
         this.dbf = DocumentBuilderFactory.newInstance();
     }
     
+//------------------------------------------------------------------------------
+public void orderEventToXml(String event, Order order, File file)
+    {
+        try
+        {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            Document doc = db.newDocument();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Element RootElement = doc.createElement("Event");
+            doc.appendChild(RootElement);
+                
+                Element ev = doc.createElement("Action"); 
+                ev.appendChild(doc.createTextNode(event) );
+                RootElement.appendChild(ev);   
+                RootElement.appendChild(doc.createTextNode("\n"));
+            if(order != null)
+            {
+                Element te = doc.createElement("Order"); //te это тип элемента
+                RootElement.appendChild(te);
+
+                Element orderId = doc.createElement("order_id");
+                orderId.appendChild(doc.createTextNode(Long.toString(order.getOrderId())));
+                te.appendChild(orderId);
+                
+                Element clid = doc.createElement("client_id");
+                clid.appendChild(doc.createTextNode(Long.toString(order.getClientId())));
+                te.appendChild(clid);
+
+                Element orderdate = doc.createElement("order_date"); 
+                orderdate.appendChild(doc.createTextNode( dateFormat.format(order.getOrderDate())));
+                te.appendChild(orderdate);
+
+                Element ordersum = doc.createElement("order_sum");
+                ordersum.appendChild(doc.createTextNode(String.valueOf(order.getOrderSum())));
+                te.appendChild(ordersum);
+            }
+            transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(file)));
+
+            System.out.println("file ready to send ! "+file + ".xml");
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new InformationSystemUiException("Problem load file cause: ", e);
+        }
+        catch (TransformerConfigurationException e)
+        {
+            throw new InformationSystemUiException("Problem parse xml cause: ", e);
+        }
+        catch (TransformerException e)
+        {
+            throw new InformationSystemUiException("Problem transform xml cause: ", e);
+        }
+        catch (ParserConfigurationException e)
+        {
+            throw new InformationSystemUiException("Problem Initialization xml parser: ", e);
+        } 
+    }    
     
-    public void eventToXml(String event, Client client, String filename)
+//------------------------------------------------------------------------------
+    
+    public void clientEventToXml(String event, Client client, File file)
     {
         try
         {
@@ -42,12 +105,13 @@ public class XmlReaderWriter {
             Element RootElement = doc.createElement("Event");
             doc.appendChild(RootElement);
                 
-                Element ev = doc.createElement("Event"); //te это тип элемента
+                Element ev = doc.createElement("Action"); 
+                ev.appendChild(doc.createTextNode(event) );
                 RootElement.appendChild(ev);   
-                
+                RootElement.appendChild(doc.createTextNode("\n"));
             if(client != null)
             {
-                Element te = doc.createElement("Client"); //te это тип элемента
+                Element te = doc.createElement("Client");
                 RootElement.appendChild(te);
 
                 Element clientId = doc.createElement("client_id");
@@ -66,10 +130,9 @@ public class XmlReaderWriter {
                 tel.appendChild(doc.createTextNode(client.getPhone()));
                 te.appendChild(tel);
             }
-            transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(filename + ".xml")));
-           
-            
-            System.out.println("file ready to send ! "+filename + ".xml");
+            transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(file)));
+
+            System.out.println("file ready to send ! "+file + ".xml");
         }
         catch (FileNotFoundException e)
         {
@@ -86,11 +149,9 @@ public class XmlReaderWriter {
         catch (ParserConfigurationException e)
         {
             throw new InformationSystemUiException("Problem Initialization xml parser: ", e);
-
-        } catch (IOException ex) {
-            Logger.getLogger(XmlReaderWriter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
+ //-----------------------------------------------------------------------------
     
     public HashSet<Client> readClientsFromXml(String filename)
     {   

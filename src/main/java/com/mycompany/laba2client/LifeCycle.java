@@ -20,14 +20,16 @@ public class LifeCycle {
         System.out.println("addr = " + addr);
         final Socket socket = new Socket(addr, SERVER_PORT);
         final ClientController controller =  new ClientController(socket);
-        
         // Пока что сюда поставлю вызов таблички клиентов
         ClientList frame = new ClientList();        
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("closing..." + socket);
+                // Закрыть OutStream
                 controller.closeBOS();
+                //Удалить временный файл
+                controller.purge();
                 try {
                     socket.close();
                 } catch (IOException ex) {
