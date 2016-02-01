@@ -1,6 +1,5 @@
 package com.mycompany.laba2client.controller;
 
-import com.mycompany.laba2client.dto.Client;
 import com.mycompany.laba2client.dto.Order;
 import com.mycompany.laba2client.utils.XmlReaderWriter;
 import java.io.*;
@@ -30,7 +29,7 @@ public class ClientController {
     }
     //--------------------------------------------------------------------------
 
-    public void getCommands() throws IOException, ParseException {
+    public void sendCommands() throws IOException, ParseException {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         xml.orderEventToXml("remove", new Order(new Long("222"), new Long("333"), format.parse("25.10.2015") , 25.50), file);
         sendFile();
@@ -52,6 +51,11 @@ public class ClientController {
     }
     //--------------------------------------------------------------------------
     
+    private void requestUpdate(){
+        
+    }
+    
+    //--------------------------------------------------------------------------
     public void closeBOS()
     {
         try {
@@ -62,6 +66,9 @@ public class ClientController {
     }
     //--------------------------------------------------------------------------
 
+    /**
+     *  Удалет временный xml файл транзакций
+     */
     public void purge() {
         file.delete();
     }

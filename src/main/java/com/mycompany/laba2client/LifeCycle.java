@@ -3,6 +3,7 @@ package com.mycompany.laba2client;
 
 import com.mycompany.laba2client.controller.ClientController;
 import com.mycompany.laba2client.view.ClientList;
+import com.mycompany.laba2client.view.TestFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
@@ -21,8 +22,12 @@ public class LifeCycle {
         final Socket socket = new Socket(addr, SERVER_PORT);
         final ClientController controller =  new ClientController(socket);
         // Пока что сюда поставлю вызов таблички клиентов
-        ClientList frame = new ClientList();        
-        frame.addWindowListener(new WindowAdapter() {
+        
+         TestFrame frame1 = new TestFrame();
+         frame1.displayView();
+        
+        //ClientList frame = new ClientList();
+        frame1.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("closing..." + socket);
@@ -42,7 +47,7 @@ public class LifeCycle {
         try 
         {
             System.out.println("socket = " + socket);
-            controller.getCommands();
+            controller.sendCommands();
         }
         catch (Exception e) 
         {
