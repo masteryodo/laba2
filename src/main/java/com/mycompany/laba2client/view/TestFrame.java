@@ -2,27 +2,46 @@
 package com.mycompany.laba2client.view;
 
 import static com.mycompany.laba2client.Constants.*;
+import com.mycompany.laba2client.controller.ClientController;
 import com.mycompany.laba2client.dto.Client;
 import com.mycompany.laba2client.dto.Order;
 import com.mycompany.laba2client.utils.XmlReaderWriter;
 import java.util.HashSet;
 
-public class TestFrame extends javax.swing.JFrame {
+public final class TestFrame extends javax.swing.JFrame {
     
     private final XmlReaderWriter xml = new XmlReaderWriter();
+    private ClientController controller;
+    private HashSet<Client> clients;
+    private HashSet<Order> orders;
+    
 
-    public TestFrame() {
+    public TestFrame(ClientController controller) {
         
-        HashSet<Client> clients = xml.readClientsFromXml(CLIENTS_FILE);
-        HashSet<Order> orders = xml.readOrdersFromXml(ORDERS_FILE);
+        this.clients = xml.readClientsFromXml(CLIENTS_FILE);
+        this.orders = xml.readOrdersFromXml(ORDERS_FILE);
         initComponents();
-        
-       ClientsTableModel clients_model = new ClientsTableModel(clients, xml);
-       OrdersTableModel orders_model = new OrdersTableModel(orders, xml);
-       jTable1.setModel(clients_model);
+       
+       this.controller = controller;
+       
+       refreshClientsTableModel();
+       //ClientsTableModel clients_model = new ClientsTableModel(clients, controller, jTable1);
+       OrdersTableModel orders_model = new OrdersTableModel(orders, controller);
+       //jTable1.setModel(clients_model);
        jTable2.setModel(orders_model);
        
     }
+    public void refreshClientsTableModel(){
+        ClientsTableModel clients_model = new ClientsTableModel(clients, controller, this);
+        jTable1.setModel(clients_model);
+        jTable1.revalidate();
+    }
+    
+    public void refreshOrdersTableModel(){
+        OrdersTableModel orders_model = new OrdersTableModel(orders, controller);
+        jTable1.setModel(orders_model);
+    }
+    
     //@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -167,7 +186,7 @@ public class TestFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TestFrame().setVisible(true);
+                new TestFrame(controller).setVisible(true);
             }
         });
     }

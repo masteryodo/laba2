@@ -1,10 +1,11 @@
 package com.mycompany.laba2client.view;
 
+import com.mycompany.laba2client.controller.ClientController;
 import com.mycompany.laba2client.dto.Client;
-import com.mycompany.laba2client.utils.XmlReaderWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -15,11 +16,14 @@ public class ClientsTableModel implements TableModel {
     private final int PHONE_COL = 3;
     private String[] columnNames = {"id", "name", "address", "phone"};
     private List<Client> clients;
-    private XmlReaderWriter xml;
+    private ClientController controller;
+    private TestFrame frame;
     
-    public ClientsTableModel(HashSet<Client> clients, XmlReaderWriter xml) {
+    
+    public ClientsTableModel(HashSet<Client> clients, ClientController controller, TestFrame frame) {
         this.clients = new ArrayList<>(clients);
-        this.xml = xml;
+        this.controller = controller;
+        this.frame = frame;
     }
 
     @Override
@@ -52,8 +56,6 @@ public class ClientsTableModel implements TableModel {
         Client client = clients.get(row);
         
         switch(col) {
-//            case ID_COL:
-//                return customer.getId();
             case NAME_COL:
                 return client.getName();
             case PHONE_COL:
@@ -77,7 +79,13 @@ public class ClientsTableModel implements TableModel {
                 clients.get(row).setPhone((String) o); break;
             default: ;}
           //TODO sendToServer(clients.get(row));  
-          xml.writeClientsToXml(new HashSet<Client>(clients));
+          try {
+            controller.sendClientUpdates("modify", clients.get(row));
+            frame.refreshClientsTableModel();
+        } catch (Exception e) {
+              System.out.println("setValueAt: " + e);
+        }
+          
         
     }
 

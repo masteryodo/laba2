@@ -1,6 +1,6 @@
 package com.mycompany.laba2client.view;
 
-import com.mycompany.laba2client.dto.Client;
+import com.mycompany.laba2client.controller.ClientController;
 import com.mycompany.laba2client.dto.Order;
 import com.mycompany.laba2client.utils.XmlReaderWriter;
 import java.text.ParseException;
@@ -19,12 +19,12 @@ public class OrdersTableModel implements TableModel {
     private final int DATE_COL = 3;
     private final int SUM_COL = 4;
     private String[] columnNames = {"order id", "client id", "date", "sum"};
-    private XmlReaderWriter xml;
+    private ClientController controller;
     private List<Order> orders;
     
-    public OrdersTableModel(HashSet<Order> orders, XmlReaderWriter xml) {
+    public OrdersTableModel(HashSet<Order> orders, ClientController controller) {
         this.orders = new ArrayList<>(orders);
-        this.xml = xml;
+        this.controller = controller;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class OrdersTableModel implements TableModel {
                 orders.get(row).setOrderSum((Double) o); break;
             default: ;}
           //TODO sendToServer(clients.get(row));  
-          xml.writeOrdersToXml(new HashSet<Order>(orders));
+          //xml.writeOrdersToXml(new HashSet<Order>(orders));
         
     }
 

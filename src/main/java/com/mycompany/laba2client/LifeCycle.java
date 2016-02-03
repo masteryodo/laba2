@@ -2,7 +2,6 @@
 package com.mycompany.laba2client;
 
 import com.mycompany.laba2client.controller.ClientController;
-import com.mycompany.laba2client.view.ClientList;
 import com.mycompany.laba2client.view.TestFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -21,9 +20,10 @@ public class LifeCycle {
         System.out.println("addr = " + addr);
         final Socket socket = new Socket(addr, SERVER_PORT);
         final ClientController controller =  new ClientController(socket);
-        // Пока что сюда поставлю вызов таблички клиентов
-        
-         TestFrame frame1 = new TestFrame();
+        controller.getUpdates();
+
+        // Создаем GUI
+         TestFrame frame1 = new TestFrame(controller);
          frame1.displayView();
         
         //ClientList frame = new ClientList();
@@ -43,16 +43,16 @@ public class LifeCycle {
                 System.exit(0);
             }
         });
-        
+//-----------------------------------------------------------------------
         try 
         {
             System.out.println("socket = " + socket);
-            controller.sendCommands();
+            //controller.sendCommands();
         }
         catch (Exception e) 
         {
             System.out.println(e);        
         }
-
+//-----------------------------------------------------------------------
     }
 }

@@ -52,8 +52,8 @@ public class ClientList extends JFrame {
     private void init() {
         try {//TODO при старте получение актуальных данныхс сервера
             HashSet<Client> clients = xml.readClientsFromXml(CLIENTS_FILE);
-            ClientsTableModel model = new ClientsTableModel(clients, xml);
-            table.setModel(model);
+            //ClientsTableModel model = new ClientsTableModel(clients, xml);
+            //table.setModel(model);
             //System.out.println(clients);
             jButton1.setText("Найти!!!");
             jButton1.setSize(100,100);
