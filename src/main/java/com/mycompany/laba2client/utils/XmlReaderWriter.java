@@ -132,7 +132,7 @@ public void orderEventToXml(String event, Order order, File file)
             }
             transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(file)));
 
-            System.out.println("file ready to send ! "+file + ".xml");
+            System.out.println("file ready to send ! "+file);
         }
         catch (FileNotFoundException e)
         {

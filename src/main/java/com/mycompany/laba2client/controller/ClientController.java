@@ -58,16 +58,18 @@ public class ClientController {
 
     //--------------------------------------------------------------------------
     public void sendFile() throws IOException {
-        
+       
         FileInputStream fis = new FileInputStream(file);
-        int in;
-        byte[] buffer = new byte[1024];
-        while ((in = fis.read()) != -1 ){
-            bos.write(in);
-        }
-        bos.write(0);
-        bos.flush();
-        fis.close();
+
+        int in = 0;
+
+            while ((in = fis.read()) != -1 ){
+                bos.write(in);
+            }
+            bos.write(0);
+            bos.flush();
+            fis.close();
+            
     }
     //--------------------------------------------------------------------------
     
