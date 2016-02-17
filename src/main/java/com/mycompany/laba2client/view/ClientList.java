@@ -15,6 +15,7 @@ public class ClientList extends JFrame {
     private XmlReaderWriter xml;
     //-------------------------------------------------
   
+    
     private javax.swing.JButton jButton1 = new javax.swing.JButton();
     private javax.swing.JButton jButton2 = new javax.swing.JButton();
     private javax.swing.JButton jButton3 = new javax.swing.JButton();

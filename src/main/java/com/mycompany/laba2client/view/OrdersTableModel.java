@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+
 public class OrdersTableModel implements TableModel {
     
     private final int ORDERID_COL = 0;

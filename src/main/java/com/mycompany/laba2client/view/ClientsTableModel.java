@@ -11,6 +11,7 @@ import javax.swing.table.TableModel;
 
 public class ClientsTableModel implements TableModel {
     
+    
     private final int NAME_COL = 1;
     private final int ADDR_COL = 2;
     private final int PHONE_COL = 3;

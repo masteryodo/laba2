@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 public class LifeCycle {
     private static final int SERVER_PORT = 8181; //TODO Убрать в константы
  
+    
     public static void main(String[] args) throws IOException {
         System.out.println("Starting");
         InetAddress addr = InetAddress.getByName("localhost");

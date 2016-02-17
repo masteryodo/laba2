@@ -237,7 +237,6 @@ public final class TestFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("remove action: " + e );
         }
-        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

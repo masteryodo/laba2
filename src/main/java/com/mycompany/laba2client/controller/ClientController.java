@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 public class ClientController {
 
+    
     private Socket socket;
     private BufferedOutputStream bos;
     private BufferedInputStream bis;
