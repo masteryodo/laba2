@@ -1,7 +1,7 @@
 
 package com.mycompany.laba2client.dto;
 
-public class Client
+public class Client implements Comparable<Client>
 {
     private final long id;
     private String name;
@@ -55,7 +55,7 @@ public class Client
     @Override
     public String toString() 
     {
-        String res = String.valueOf(getId()) + getName() + getAddress() + getPhone();
+        String res = getName() + getAddress() + getPhone() + String.valueOf(getId());
         return res;
     }
 
@@ -92,6 +92,18 @@ public class Client
     public String getPhone()
     {
         return phone;
+    }
+
+ 
+    @Override
+    public int compareTo(Client cl1) {
+        Client entry = cl1;
+            
+             int result = toString().compareTo(cl1.toString());
+             if(result != 0) {
+                    return result;
+             }
+       return 0;
     }
     
 

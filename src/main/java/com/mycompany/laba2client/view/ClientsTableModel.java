@@ -2,10 +2,10 @@ package com.mycompany.laba2client.view;
 
 import com.mycompany.laba2client.controller.ClientController;
 import com.mycompany.laba2client.dto.Client;
+import com.mycompany.laba2client.utils.MyComparator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -22,7 +22,9 @@ public class ClientsTableModel implements TableModel {
     
     
     public ClientsTableModel(HashSet<Client> clients, ClientController controller, TestFrame frame) {
+        
         this.clients = new ArrayList<>(clients);
+        this.clients.sort(new MyComparator());
         this.controller = controller;
         this.frame = frame;
     }
@@ -79,10 +81,9 @@ public class ClientsTableModel implements TableModel {
             case PHONE_COL:
                 clients.get(row).setPhone((String) o); break;
             default: ;}
-          //TODO sendToServer(clients.get(row));  
+
           try {
             controller.sendClientUpdates("modify", clients.get(row));
-            //frame.refreshClientsTableModel();
         } catch (Exception e) {
               System.out.println("setValueAt: " + e);
         }
@@ -91,13 +92,8 @@ public class ClientsTableModel implements TableModel {
     }
 
     @Override
-    public void addTableModelListener(TableModelListener tl) {
-        
-    }
-
+    public void addTableModelListener(TableModelListener tl) {    }
     @Override
-    public void removeTableModelListener(TableModelListener tl) {
-        
-    }
+    public void removeTableModelListener(TableModelListener tl) {    }
     
 }

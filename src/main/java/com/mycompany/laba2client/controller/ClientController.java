@@ -6,12 +6,10 @@ import com.mycompany.laba2client.utils.XmlReaderWriter;
 import java.io.*;
 import java.net.Socket;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientController {
-
     
     private Socket socket;
     private BufferedOutputStream bos;
@@ -29,17 +27,8 @@ public class ClientController {
         this.transactionFile = "trans"+socket.getLocalPort()+".xml";
         this.file = new File(transactionFile);
     }
-    //--------------------------------------------------------------------------
-    // TODO Удалить этот метод
-    public void sendCommands() throws IOException, ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        xml.orderEventToXml("remove", new Order(new Long("222"), new Long("333"), format.parse("25.10.2015") , 25.50), file);
-        sendFile();
-        System.out.println("Файл отправлен");
-        getUpdates();
-    }
-    //--------------------------------------------------------------------------
-
+    
+   
     public void sendClientUpdates(String event, Client client) throws IOException, ParseException {
         
         xml.clientEventToXml(event, client, file);
@@ -47,7 +36,7 @@ public class ClientController {
         System.out.println("Обновление клиента отправлено");
         getUpdates();
     }
-    //--------------------------------------------------------------------------
+   
 
     public void sendOrderUpdates( String event, Order order) throws IOException, ParseException {
 
@@ -57,7 +46,7 @@ public class ClientController {
         getUpdates();
     }
 
-    //--------------------------------------------------------------------------
+    
     public void sendFile() throws IOException {
        
         FileInputStream fis = new FileInputStream(file);
@@ -72,8 +61,7 @@ public class ClientController {
             fis.close();
             
     }
-    //--------------------------------------------------------------------------
-    
+        
     public void getUpdates() throws FileNotFoundException, IOException{
         File file1 = new File("clients_db.xml");
         File file2 = new File("orders_db.xml");
@@ -96,7 +84,6 @@ public class ClientController {
         
     }
     
-    //--------------------------------------------------------------------------
     public void closeBOS()
     {
         try {
@@ -106,9 +93,8 @@ public class ClientController {
             Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    //--------------------------------------------------------------------------
-
-    /**
+  
+  /**
      *  Удалет временный xml файл транзакций
      */
     public void purge() {

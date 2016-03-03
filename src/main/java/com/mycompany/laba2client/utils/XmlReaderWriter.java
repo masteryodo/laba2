@@ -28,13 +28,11 @@ public class XmlReaderWriter {
     private final DocumentBuilderFactory dbf;
         
     
- //-----------------------------------------------------------------------------
     public XmlReaderWriter()
     {
         this.dbf = DocumentBuilderFactory.newInstance();
     }
     
-//------------------------------------------------------------------------------
 public void orderEventToXml(String event, Order order, File file)
     {
         try
@@ -52,7 +50,7 @@ public void orderEventToXml(String event, Order order, File file)
                 RootElement.appendChild(doc.createTextNode("\n"));
             if(order != null)
             {
-                Element te = doc.createElement("Order"); //te это тип элемента
+                Element te = doc.createElement("Order"); 
                 RootElement.appendChild(te);
 
                 Element orderId = doc.createElement("order_id");
@@ -93,7 +91,6 @@ public void orderEventToXml(String event, Order order, File file)
         } 
     }    
     
-//------------------------------------------------------------------------------
     
     public void clientEventToXml(String event, Client client, File file)
     {
@@ -257,7 +254,7 @@ public void orderEventToXml(String event, Order order, File file)
             doc.appendChild(RootElement);
             for (Client h : clientsSet)
             {
-                Element te = doc.createElement("Client"); //te это тип элемента
+                Element te = doc.createElement("Client"); 
                 RootElement.appendChild(te);
 
                 Element clientId = doc.createElement("client_id");
@@ -323,7 +320,7 @@ public void writeOrdersToXml(Set<Order> ordersSet)
             doc.appendChild(RootElement);
             for (Order h : ordersSet)
             {
-                Element te = doc.createElement("Order"); //te это тип элемента
+                Element te = doc.createElement("Order");
                 RootElement.appendChild(te);
 
                 Element orderId = doc.createElement("order_id");
